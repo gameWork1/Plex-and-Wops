@@ -24,31 +24,31 @@ public class MirrorSettings : MonoBehaviour
             
     }
 
-    void StartGame()
+
+    public void StartGame()
     {
-        if(!NetworkServer.active && !NetworkClient.isConnected)
-        {
-            Debug.Log("Host");
-            NetworkManager.singleton.StartHost();
-        }
-           
-        else if(NetworkServer.active && !NetworkClient.isConnected)
-        {
-            Debug.Log("Client");
-            NetworkManager.singleton.StartClient();
-        }
-            
+        //if (!NetworkClient.isConnected && !NetworkServer.active)
+        //{
+        //    NetworkManager.singleton.StartHost();
+        //}
+        //else
+        //{
+        //    NetworkManager.singleton.StartClient();
+        //}
+        NetworkManager.singleton.StartClient();
+
+
     }
-    void StopGame()
+    public void StopGame()
     {
-        if (NetworkServer.active && NetworkClient.isConnected)
-        {
-            NetworkManager.singleton.StopHost();
-        }
-        else if (NetworkClient.isConnected)
-        {
-            NetworkManager.singleton.StopClient();
-        }
-        
+        //if (NetworkServer.active && NetworkClient.isConnected)
+        //{
+        //    NetworkManager.singleton.StopHost();
+        //}
+        //else if (NetworkClient.isConnected)
+        //{
+        //    NetworkManager.singleton.StopClient();
+        //}
+        NetworkManager.singleton.StopClient();
     }
 }

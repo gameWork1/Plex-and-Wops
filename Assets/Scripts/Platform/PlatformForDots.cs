@@ -15,13 +15,13 @@ public class PlatformForDots : MonoBehaviour
     [HideInInspector] public bool IsFull = false;
      public GameObject currentPoint = null;
     [HideInInspector] public GameObject nextPoint = null;
-    private GameManager gameManager;
+    [SerializeField] private GameManagerMultiplayer gameManager;
     private float normalPointY;
 
     private void Awake()
     {
         if(SceneManager.GetActiveScene().name != "Menu")
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManagerMultiplayer>();
         normalPointY = transform.position.y + offset;
     }
 
@@ -59,7 +59,6 @@ public class PlatformForDots : MonoBehaviour
         if (currentPoint != null)
             currentPoint.GetComponent<Point>().platform = transform;
         NextPointToCurrent();
-
 
         if (IsFull && currentPoint == null)
             IsFull = false;
@@ -110,15 +109,16 @@ public class PlatformForDots : MonoBehaviour
             Vector3 pos = new Vector3(currentPoint.transform.position.x, normalPointY, currentPoint.transform.position.z);
             currentPoint.GetComponent<Point>().MoveToPlatform(pos);
         }
-        else if(currentPoint != null && !currentPoint.GetComponent<Point>().isMoving && currentPoint.GetComponentInChildren<MeshRenderer>().material != currentPoint.GetComponent<Point>().normalMaterial
-            && !gameManager.pointCreateManager.canCreatePlayer)
+        else if(currentPoint != null && !currentPoint.GetComponent<Point>().isMoving &&
+            currentPoint.GetComponentInChildren<MeshRenderer>().material != currentPoint.GetComponent<Point>().normalMaterial &&
+             !gameManager.pointCreateManager.canCreatePlayer)
         {
             currentPoint.GetComponentInChildren<MeshRenderer>().material = currentPoint.GetComponent<Point>().normalMaterial;
             currentPoint.GetComponent<Point>().speed = currentPoint.GetComponent<Point>().normalSpeed;
             currentPoint.GetComponent<Collider>().enabled = true;
         }
         
-
+        
 
     }
 

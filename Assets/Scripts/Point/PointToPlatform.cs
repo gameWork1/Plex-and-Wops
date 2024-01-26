@@ -1,9 +1,6 @@
-using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PointToPlatform : NetworkBehaviour
+public class PointToPlatform : MonoBehaviour
 {
     [SerializeField] public bool motionWops;
 
@@ -13,10 +10,6 @@ public class PointToPlatform : NetworkBehaviour
 
     private void Update()
     {
-        if (NetworkClient.isConnected)
-        {
-            if (!isLocalPlayer) return;
-        }
         Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;

@@ -82,6 +82,10 @@ public class MovePointWithScreen : MonoBehaviour
                     
                 }
             }
+            else if(selectPoint != null && !Physics.Raycast(ray))
+            {
+                deSelect();
+            }
             
             
                 
@@ -144,6 +148,13 @@ public class MovePointWithScreen : MonoBehaviour
         GetComponent<PointToPlatform>().CreateAndMove = false;
         selectPoint = null;
         gameManager.NextMotion();
+    }
+    void deSelect()
+    {
+        selectPoint.GetComponent<Point>().speed = selectPoint.GetComponent<Point>().normalSpeed;
+        selectPoint.transform.position = new Vector3(selectPoint.transform.position.x, selectPoint.transform.position.y - upperYPoint, selectPoint.transform.position.z);
+        selectPoint.point.GetComponent<MeshRenderer>().material = selectPoint.normalMaterial;
+        selectPoint.GetComponent<Collider>().enabled = true;
     }
 
 }

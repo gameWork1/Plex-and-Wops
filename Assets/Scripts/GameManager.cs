@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private string startText;
     public MovePlatform[] platforms;
-    [HideInInspector]public PointToPlatform pointCreateManager;
+    [HideInInspector] public PointToPlatform pointCreateManager;
     private PlatformForDots[] platformsForPoints;
     public WinCase[] winCases;
 
@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour
             audioSource = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<Music>();
         }
     }
-    
-    
+
+
     public void LateUpdate()
     {
         if (SceneManager.GetActiveScene().name != "Menu")
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                         bool winPlex = winCase.CheckWin(false);
 
 
-                        if (!winWops && !winPlex && CheckPlatformsIsFull())
+                        if (!winWops && !winPlex && CheckPlatformsIsFull() || winPlex & winWops)
                         {
                             pointCreateManager.canCreatePlayer = false;
                             if (timeBeforePanel <= 0)
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
         {
             textButton.text = "Switch off Music";
         }
-    } 
+    }
 
     [System.Serializable]
     public struct PointStructur

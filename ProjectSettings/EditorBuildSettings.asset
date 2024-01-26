@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Together.unity
     guid: 31b88bbcd3b35154d94b754dd66c544c
   - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 479b9e7df0dead3458db6bd761d335dd
+  - enabled: 1
     path: Assets/Scenes/Game Multiplayer.unity
     guid: 2897b33b68ced6f4ca26ba192cc8dbfd
   m_configObjects:
