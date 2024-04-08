@@ -6,14 +6,11 @@ using UnityEngine.SceneManagement;
 public class MirrorSettings : MonoBehaviour
 {
     public int[] idsScene;
-    public string btnMultiplayer;
     public string btnQuitGame;
 
     private void Awake()
     {
-        if(SceneManager.GetActiveScene().name == "Menu")
-            GameObject.FindWithTag(btnMultiplayer).GetComponent<Button>().onClick.AddListener(StartGame);
-        else
+        if(SceneManager.GetActiveScene().name != "Menu")
         {
             foreach(int id in idsScene)
             {

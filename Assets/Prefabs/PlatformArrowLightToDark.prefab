@@ -60,9 +60,11 @@ MonoBehaviour:
     triggerName: Wops
   offset: 1
   rotateX: -90
+  moveTowardsFromXToZ: 0
   IsFull: 0
   currentPoint: {fileID: 0}
   nextPoint: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!65 &1321962238855574331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,6 +128,7 @@ GameObject:
   - component: {fileID: 7551650770028336694}
   - component: {fileID: 3496776826826362508}
   - component: {fileID: 5006346865278287533}
+  - component: {fileID: 9103929671200373330}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -198,6 +201,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9103929671200373330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5114970316172354538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ba835d07615804f903df25fb21d513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5783751663632048133
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +224,7 @@ GameObject:
   - component: {fileID: 9056577712060516767}
   - component: {fileID: 5297164780551440946}
   - component: {fileID: 1545256740320976299}
+  - component: {fileID: 2423842222497363609}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -281,3 +297,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2423842222497363609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783751663632048133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ba835d07615804f903df25fb21d513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

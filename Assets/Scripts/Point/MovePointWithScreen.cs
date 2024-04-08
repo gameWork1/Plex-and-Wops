@@ -55,7 +55,7 @@ public class MovePointWithScreen : MonoBehaviour
     void SelectingPoint()
     {
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit) && hit.transform.GetComponent<Point>())
+        if (Physics.Raycast(ray, out hit, 100f) && hit.transform.GetComponent<Point>())
         {
             Point point = hit.transform.GetComponent<Point>();
             if(point.platform != null)
@@ -82,14 +82,9 @@ public class MovePointWithScreen : MonoBehaviour
                     
                 }
             }
-            else if(selectPoint != null && !Physics.Raycast(ray))
-            {
-                deSelect();
-            }
             
-            
-                
         }
+        
     }
     void SetSelectPoint()
     {
@@ -112,6 +107,10 @@ public class MovePointWithScreen : MonoBehaviour
                     
 
                 }
+                else if(!Physics.Raycast(ray, out hit) || Physics.Raycast(ray, out hit) && !hit.transform.GetComponent<Point>())
+                {
+                    deSelect();
+                }
             }
         }
         
@@ -130,7 +129,6 @@ public class MovePointWithScreen : MonoBehaviour
                     if (pl.name == "Plex")
                     {
                         gameManager.nextTextColor = pl.textColor;
-                        gameManager.nextTriggerForMotionText = "Motion " + pl.triggerName;
                     }
 
                 }
@@ -139,7 +137,6 @@ public class MovePointWithScreen : MonoBehaviour
                     if (pl.name == "Wops")
                     {
                         gameManager.nextTextColor = pl.textColor;
-                        gameManager.nextTriggerForMotionText = "Motion " + pl.triggerName;
                     }
                 }
             }
@@ -149,12 +146,14 @@ public class MovePointWithScreen : MonoBehaviour
         selectPoint = null;
         gameManager.NextMotion();
     }
-    void deSelect()
+    public void deSelect()
     {
+        if(selectPoint == null) return;
         selectPoint.GetComponent<Point>().speed = selectPoint.GetComponent<Point>().normalSpeed;
         selectPoint.transform.position = new Vector3(selectPoint.transform.position.x, selectPoint.transform.position.y - upperYPoint, selectPoint.transform.position.z);
         selectPoint.point.GetComponent<MeshRenderer>().material = selectPoint.normalMaterial;
         selectPoint.GetComponent<Collider>().enabled = true;
+        selectPoint = null;
     }
 
 }

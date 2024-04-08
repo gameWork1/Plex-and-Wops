@@ -21,16 +21,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float timeBeforePanel;
     private bool openedWinPanel;
     [Header("Next Motion")]
-    public Animator motionImage;
     [HideInInspector] public int motionGame = 1;
     public Text motionText;
     [HideInInspector] public Color nextTextColor;
-    [HideInInspector] public string nextTriggerForMotionText;
     private Music audioSource;
+    [SerializeField] private GameObject skipButton;
 
 
     private void Start()
     {
+        
         if (SceneManager.GetActiveScene().name != "Menu")
         {
             platformsForPoints = GameObject.FindObjectsOfType<PlatformForDots>();
@@ -62,10 +62,12 @@ public class GameManager : MonoBehaviour
             {
                 if (pointCreateManager != null && pointCreateManager.canCreatePlayer && !pointCreateManager.GetComponent<MovePointWithScreen>().canMovePoint)
                 {
+                    bool winWops = false;
+                    bool winPlex = false;
                     foreach (WinCase winCase in winCases)
                     {
-                        bool winWops = winCase.CheckWin(true);
-                        bool winPlex = winCase.CheckWin(false);
+                        if(!winWops) winWops = winCase.CheckWin(true);
+                        if (!winPlex) winPlex = winCase.CheckWin(false);
 
 
                         if (!winWops && !winPlex && CheckPlatformsIsFull() || winPlex & winWops)
@@ -133,6 +135,9 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+            if(motionGame > 2 && !skipButton.activeSelf)
+                skipButton.SetActive(true);
+
 
 
         }
@@ -162,11 +167,27 @@ public class GameManager : MonoBehaviour
     public void NextMotion()
     {
         motionText.color = nextTextColor;
-        motionImage.SetTrigger(nextTriggerForMotionText);
         foreach (MovePlatform platform in platforms)
         {
             platform.MovePoint();
             platform.transform.GetComponent<PlatformForDots>().NextPointToCurrent();
+        }
+        foreach(Player point in platforms[0].GetComponent<PlatformForDots>().typesPlayers)
+        {
+            if (pointCreateManager.motionWops)
+            {
+                if (point.name == "Plex")
+                {
+                    nextTextColor = point.textColor;
+                }
+            }
+            else
+            {
+                if(point.name == "Wops")
+                {
+                    nextTextColor = point.textColor;
+                }
+            }
         }
         motionGame++;
         motionText.text = startText + Convert.ToString(motionGame);
@@ -206,6 +227,20 @@ public class GameManager : MonoBehaviour
             textButton.text = "Switch off Music";
         }
     }
+
+    public void SkipMotion()
+    {
+        if (pointCreateManager.canCreatePlayer) {
+        
+            pointCreateManager.GetComponent<MovePointWithScreen>().deSelect();
+            pointCreateManager.GetComponent<MovePointWithScreen>().canMovePoint = false;
+            pointCreateManager.CreateAndMove = false;
+            NextMotion();
+            //pointCreateManager.motionWops = !pointCreateManager.motionWops;
+        }
+        
+    }
+
 
     [System.Serializable]
     public struct PointStructur

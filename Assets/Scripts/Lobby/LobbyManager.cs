@@ -3,6 +3,17 @@ using UnityEngine;
 
 public class LobbyManager : NetworkRoomManager
 {
+    public static LobbyManager instance;
+
+    private void Awake()
+    {
+        base.Awake();
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     public override void OnRoomClientEnter()
     {
         base.OnRoomClientEnter();
@@ -10,6 +21,7 @@ public class LobbyManager : NetworkRoomManager
         {
             ServerChangeScene(GameplayScene);
         }
+        
     }
     public override void OnClientDisconnect()
     {

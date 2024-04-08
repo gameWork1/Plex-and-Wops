@@ -8,6 +8,7 @@ TagManager:
   - AudioManager
   - Multiplayer
   - QuitMultiplayer
+  - MultiplayerPanel
   layers:
   - Default
   - TransparentFX

@@ -1,8 +1,5 @@
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class PlatformForDots : MonoBehaviour
@@ -15,13 +12,13 @@ public class PlatformForDots : MonoBehaviour
     [HideInInspector] public bool IsFull = false;
      public GameObject currentPoint = null;
     [HideInInspector] public GameObject nextPoint = null;
-    [SerializeField] private GameManagerMultiplayer gameManager;
+    [SerializeField] private GameManager gameManager;
     private float normalPointY;
 
     private void Awake()
     {
         if(SceneManager.GetActiveScene().name != "Menu")
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManagerMultiplayer>();
+            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         normalPointY = transform.position.y + offset;
     }
 
@@ -41,7 +38,6 @@ public class PlatformForDots : MonoBehaviour
                 IsFull = true;
 
                 gameManager.nextTextColor = pl.textColor;
-                gameManager.nextTriggerForMotionText = "Motion " + pl.triggerName;    
                 break;
             }
         }

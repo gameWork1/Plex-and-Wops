@@ -2,14 +2,15 @@
 using UnityEngine;
 
 namespace Mirror.Discovery
-{
+{ 
     [DisallowMultipleComponent]
     [AddComponentMenu("Network/Network Discovery HUD")]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-discovery")]
     [RequireComponent(typeof(NetworkDiscovery))]
     public class NetworkDiscoveryHUD : MonoBehaviour
     {
-        readonly Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
+        public bool drawGUI;
+        [HideInInspector]public readonly Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
         Vector2 scrollViewPos = Vector2.zero;
 
         public NetworkDiscovery networkDiscovery;
@@ -28,15 +29,19 @@ namespace Mirror.Discovery
 
         void OnGUI()
         {
-            if (NetworkManager.singleton == null)
-                return;
+            if (drawGUI)
+            {
+                if (NetworkManager.singleton == null)
+                    return;
 
-            if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
-                DrawGUI();
+                if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
+                    DrawGUI();
 
-            if (NetworkServer.active || NetworkClient.active)
-                StopButtons();
+                if (NetworkServer.active || NetworkClient.active)
+                    StopButtons();
+            }
         }
+            
 
         void DrawGUI()
         {
@@ -117,7 +122,7 @@ namespace Mirror.Discovery
             GUILayout.EndArea();
         }
 
-        void Connect(ServerResponse info)
+        private void Connect(ServerResponse info)
         {
             networkDiscovery.StopDiscovery();
             NetworkManager.singleton.StartClient(info.uri);
