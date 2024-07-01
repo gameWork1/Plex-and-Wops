@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Multiplayer.unity
     guid: 2897b33b68ced6f4ca26ba192cc8dbfd
+  - enabled: 1
+    path: Assets/Scenes/Game Bot.unity
+    guid: e21b395436ee03049a1d94c705519315
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8ffb8fb629b666b4e81ac0108472ff56, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 10957cf3d2b16c042b9d783ae8299b60, type: 2}

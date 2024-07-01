@@ -1,43 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardGame : MonoBehaviour
 {
-    public List<Row> board = new List<Row>();
+    [SerializeField] private List<Row> boardGameObjects = new List<Row>();
+    [HideInInspector] public List<List<int>> board = new List<List<int>>();
 
-    public List<List<int>> GetIntBoard()
+    private List<List<int>> GetIntBoard()
     {
         List<List<int>> intBoard = new List<List<int>> { new List<int> { 0,0,0,0 },
-                                                        new List<int> { 0,0,0,0 },
-                                                        new List<int> { 0,0,0,0 },
-                                                        new List<int> { 0,0,0,0 }};
+                                                         new List<int> { 0,0,0,0 },
+                                                         new List<int> { 0,0,0,0 },
+                                                         new List<int> { 0,0,0,0 }
+                                                        };
 
-        for (int y = 0; y < board.Count; y++)
+        for (int y = 0; y < boardGameObjects.Count; y++)
         {
-            for (int x = 0; x < board[y].platforms.Count; x++)
+            for (int x = 0; x < boardGameObjects[y].platforms.Count; x++)
             {
-                intBoard[y][x] = board[y].platforms[x].GetComponent<TypePlatform>().typePlatform;
+                intBoard[y][x] = boardGameObjects[y].platforms[x].GetComponent<TypePlatform>().typePlatform;
             }
         }
 
         return intBoard;
     }
 
-    private void Update()
+    public List<List<int>> GetCurrentBoard()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            var board = GetComponent<BotManager>().MotionManager.NextMotionOnBoard(GetIntBoard());
-
-            for(int y = 0; y < board.Count; y++)
-            {
-                for (int x = 0; x < board.Count; x++)
-                {
-                    Debug.Log("X: " + x + " " + "Y: " + y + "  " + "Value: " + board[y][x]);
-                }
-            }
-        }
+        board = GetComponent<BotManager>().MotionManager.NextMotionOnBoard(GetIntBoard());
+        return board;
     }
 }
 

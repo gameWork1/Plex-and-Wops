@@ -20,7 +20,7 @@ public class MovePointWithScreen : MonoBehaviour
     private void LateUpdate()
     {
 
-        if(gameManager.motionGame > 2)
+        if(gameManager.motionGame > 2 && !gameManager.pauseGame )
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

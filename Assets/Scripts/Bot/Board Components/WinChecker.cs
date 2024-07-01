@@ -2,29 +2,32 @@ using System.Collections.Generic;
 
 public class WinChecker
 {
-    int CheckWin(int botId, List<List<int>> localBoardInt)
+    public int CheckWin(int botId, List<List<int>> localBoardInt)
     {
         int winPlayer = 0;
         int ver = winVertical(botId, localBoardInt);
         int hor = winHorizontal(botId, localBoardInt);
-        int diaganelPlus = winDiaganel(botId, localBoardInt, 1);
-        int diaganelMinus = winDiaganel(botId, localBoardInt, -1);
+        //int diaganelPlus = winDiaganel(botId, localBoardInt, 1);
+        //int diaganelMinus = winDiaganel(botId, localBoardInt, -1);
+        int diaganelPlus = 0;
+        int diaganelMinus = 0;
 
         bool player = false;
         bool bot = false;
 
         if (ver > 0) bot = true;
-        else player = true;
+        else if (ver < 0) player = true;
         if (hor > 0) bot = true;
-        else player = true;
+        else if (hor < 0) player = true;
         if (diaganelPlus > 0) bot = true;
-        else player = true;
+        else if (diaganelPlus < 0) player = true;
         if (diaganelMinus > 0) bot = true;
-        else player = true;
+        else if (diaganelMinus < 0) player = true;
 
         if (player && !bot) winPlayer = -botId;
         if (!player && bot) winPlayer = botId;
         if (!player && !bot) winPlayer = -2;
+        if (player && bot) winPlayer = 0;
 
         return winPlayer;
     }

@@ -14,8 +14,9 @@ public class PointToPlatform : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(raycast, out hit) && Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(raycast, out hit) && Input.GetMouseButtonDown(0) && !GameManager.instance.pauseGame)
         {
+
             if (hit.transform.gameObject.GetComponent<PlatformForDots>())
             {
                 if (canCreatePlayer && !CreateAndMove && GetComponent<MovePointWithScreen>().selectPoint == null)

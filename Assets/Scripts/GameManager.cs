@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private string startText;
+    //[SerializeField] private string startText;
     public MovePlatform[] platforms;
     [HideInInspector] public PointToPlatform pointCreateManager;
     private PlatformForDots[] platformsForPoints;
@@ -19,25 +16,31 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text winText;
     public PointStructur[] pointsTypes;
     [SerializeField] private float timeBeforePanel;
-    private bool openedWinPanel;
+    [HideInInspector] public bool pauseGame;
     [Header("Next Motion")]
     [HideInInspector] public int motionGame = 1;
+    public Text motionTextCount;
     public Text motionText;
     [HideInInspector] public Color nextTextColor;
-    private Music audioSource;
+    [HideInInspector] public static GameManager instance;
     [SerializeField] private GameObject skipButton;
+    [Header("Edit Mode")]
+    [SerializeField] private GameObject editModeButton;
+
 
 
     private void Start()
     {
-        
+        if(instance == null) instance= this;
+        else Destroy(gameObject);
+
         if (SceneManager.GetActiveScene().name != "Menu")
         {
             platformsForPoints = GameObject.FindObjectsOfType<PlatformForDots>();
         }
         else
         {
-            audioSource = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<Music>();
+            //audioSource = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<Music>();
         }
     }
 
@@ -58,7 +61,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             }
-            if (!openedWinPanel)
+            if (!pauseGame)
             {
                 if (pointCreateManager != null && pointCreateManager.canCreatePlayer && !pointCreateManager.GetComponent<MovePointWithScreen>().canMovePoint)
                 {
@@ -70,20 +73,20 @@ public class GameManager : MonoBehaviour
                         if (!winPlex) winPlex = winCase.CheckWin(false);
 
 
-                        if (!winWops && !winPlex && CheckPlatformsIsFull() || winPlex & winWops)
+                        if ((!winWops && !winPlex && CheckPlatformsIsFull()) || (winPlex && winWops))
                         {
                             pointCreateManager.canCreatePlayer = false;
                             if (timeBeforePanel <= 0)
                             {
+                                winText.color = Color.white - (Color.white / 4);
                                 winText.text = "TIE!";
                                 panelWithWinName.SetActive(true);
+                                pauseGame = true;
                             }
                             else
                             {
                                 timeBeforePanel -= Time.deltaTime;
                             }
-                            openedWinPanel = true;
-                            break;
                         }
                         else if (winWops && !winPlex)
                         {
@@ -99,13 +102,12 @@ public class GameManager : MonoBehaviour
                                     }
                                 }
                                 panelWithWinName.SetActive(true);
-                                openedWinPanel = true;
+                                pauseGame = true;
                             }
                             else
                             {
                                 timeBeforePanel -= Time.deltaTime;
                             }
-                            break;
                         }
                         else if (!winWops && winPlex)
                         {
@@ -122,21 +124,26 @@ public class GameManager : MonoBehaviour
                                 }
                                 panelWithWinName.SetActive(true);
 
-                                openedWinPanel = true;
+                                pauseGame = true;
                             }
                             else
                             {
                                 timeBeforePanel -= Time.deltaTime;
                             }
 
-                            break;
                         }
 
                     }
                 }
             }
-            if(motionGame > 2 && !skipButton.activeSelf)
+            if(motionGame > 1 && editModeButton.active)
+            {
+                editModeButton.SetActive(false);
+            }
+            if (motionGame > 2 && Camera.main.GetComponent<MovePointWithScreen>().canMovePoint )
                 skipButton.SetActive(true);
+            else
+                skipButton.SetActive(false);
 
 
 
@@ -161,12 +168,13 @@ public class GameManager : MonoBehaviour
 
     public void ChangeColorTextMotion(Color color)
     {
+        motionTextCount.color = color;
         motionText.color = color;
     }
 
     public void NextMotion()
     {
-        motionText.color = nextTextColor;
+        ChangeColorTextMotion(nextTextColor);
         foreach (MovePlatform platform in platforms)
         {
             platform.MovePoint();
@@ -190,7 +198,7 @@ public class GameManager : MonoBehaviour
             }
         }
         motionGame++;
-        motionText.text = startText + Convert.ToString(motionGame);
+        motionTextCount.text = Convert.ToString(motionGame);
     }
 
     public void Exit()
@@ -215,18 +223,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ChangeMuteAudio(Text textButton)
-    {
-        bool isMute = audioSource.ChangeMute();
-        if (isMute)
-        {
-            textButton.text = "Switch on Music";
-        }
-        else
-        {
-            textButton.text = "Switch off Music";
-        }
-    }
+
+
 
     public void SkipMotion()
     {

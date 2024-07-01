@@ -195,19 +195,6 @@ public class GameManagerMultiplayer : NetworkBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ChangeMuteAudio(Text textButton)
-    {
-        bool isMute = audioSource.ChangeMute();
-        if (isMute)
-        {
-            textButton.text = "Switch on Music";
-        }
-        else
-        {
-            textButton.text = "Switch off Music";
-        }
-    }
-
     [System.Serializable]
     public struct PointStructur
     {

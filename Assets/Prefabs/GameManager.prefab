@@ -82,8 +82,8 @@ MonoBehaviour:
   - name: Plex
     textColor: {r: 0, g: 0, b: 0, a: 1}
   timeBeforePanel: 1.3
-  motionImage: {fileID: 0}
+  openedWinPanel: 0
   motionGame: 1
   motionText: {fileID: 0}
   nextTextColor: {r: 0, g: 0, b: 0, a: 0}
-  nextTriggerForMotionText: 
+  skipButton: {fileID: 0}

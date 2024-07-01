@@ -127,7 +127,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   selectPoint: {fileID: 0}
   downerPointSpeed: 5
-  upperYPoint: 0.75
+  upperYPoint: 1.25
 --- !u!114 &1403091472154417999
 MonoBehaviour:
   m_ObjectHideFlags: 0
